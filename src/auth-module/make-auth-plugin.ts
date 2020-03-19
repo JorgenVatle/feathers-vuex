@@ -10,18 +10,31 @@ import setupGetters from './auth-module.getters'
 import setupMutations from './auth-module.mutations'
 import setupActions from './auth-module.actions'
 
+interface AuthPluginState {
+  accessToken: string;
+  entityIdField: string;
+  errorOnAuthenticate: null | string;
+  errorOnLogout: null | string;
+  isAuthenticatePending: boolean;
+  isLogoutPending: boolean;
+  payload: any;
+  user: any;
+  userService: string;
+  serverAlias: string;
+}
+
 interface MakeAuthPluginOptions<T> {
   namespace: string;
   serverAlias: string;
   userService: string;
   debug: boolean;
   state: T;
-  getters: GetterTree<T, any>
-  mutations: MutationTree<T>;
-  actions: ActionTree<T, any>;
+  getters: GetterTree<AuthPluginState & T, any>
+  mutations: MutationTree<AuthPluginState & T>;
+  actions: ActionTree<AuthPluginState & T, any>;
 }
 
-const defaults: MakeAuthPluginOptions<any> = {
+const defaults: MakeAuthPluginOptions<{}> = {
   namespace: 'auth',
   userService: '', // Set this to automatically populate the user (using an additional request) on login success.
   serverAlias: 'api',
@@ -40,7 +53,7 @@ export default function authPluginInit(
     throw new Error('You must pass a Feathers Client instance to feathers-vuex')
   }
 
-  return function makeAuthPlugin(options: MakeAuthPluginOptions<any>) {
+  return function makeAuthPlugin<T>(options: MakeAuthPluginOptions<T>) {
     options = Object.assign(
       {},
       defaults,
