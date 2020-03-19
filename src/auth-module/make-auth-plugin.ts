@@ -11,8 +11,8 @@ import setupMutations from './auth-module.mutations'
 import setupActions from './auth-module.actions'
 
 interface MakeAuthPluginOptions<T> {
-  namespace: 'auth' | string;
-  serverAlias: 'api' | string;
+  namespace: string;
+  serverAlias: string;
   userService: string;
   debug: boolean;
   state: T;
