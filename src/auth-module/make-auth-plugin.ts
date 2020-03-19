@@ -3,12 +3,12 @@ eslint
 @typescript-eslint/explicit-function-return-type: 0,
 @typescript-eslint/no-explicit-any: 0
 */
+import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { FeathersVuexOptions } from '../service-module/types'
 import setupState from './auth-module.state'
 import setupGetters from './auth-module.getters'
 import setupMutations from './auth-module.mutations'
 import setupActions from './auth-module.actions'
-import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 const defaults = {
   namespace: 'auth',
