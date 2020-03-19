@@ -10,17 +10,6 @@ import setupGetters from './auth-module.getters'
 import setupMutations from './auth-module.mutations'
 import setupActions from './auth-module.actions'
 
-const defaults = {
-  namespace: 'auth',
-  userService: '', // Set this to automatically populate the user (using an additional request) on login success.
-  serverAlias: 'api',
-  debug: false,
-  state: {}, // for custom state
-  getters: {}, // for custom getters
-  mutations: {}, // for custom mutations
-  actions: {} // for custom actions
-}
-
 interface MakeAuthPluginOptions<T> {
   namespace: 'auth' | string;
   serverAlias: 'api' | string;
@@ -30,6 +19,17 @@ interface MakeAuthPluginOptions<T> {
   getters: GetterTree<T, any>
   mutations: MutationTree<T>;
   actions: ActionTree<T, any>;
+}
+
+const defaults: MakeAuthPluginOptions<any> = {
+  namespace: 'auth',
+  userService: '', // Set this to automatically populate the user (using an additional request) on login success.
+  serverAlias: 'api',
+  debug: false,
+  state: {}, // for custom state
+  getters: {}, // for custom getters
+  mutations: {}, // for custom mutations
+  actions: {} // for custom actions
 }
 
 export default function authPluginInit(
