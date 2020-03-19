@@ -8,6 +8,7 @@ import setupState from './auth-module.state'
 import setupGetters from './auth-module.getters'
 import setupMutations from './auth-module.mutations'
 import setupActions from './auth-module.actions'
+import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 const defaults = {
   namespace: 'auth',
@@ -20,6 +21,17 @@ const defaults = {
   actions: {} // for custom actions
 }
 
+interface MakeAuthPluginOptions<T> {
+  namespace: 'auth' | string;
+  serverAlias: 'api' | string;
+  userService: string;
+  debug: boolean;
+  state: T;
+  getters: GetterTree<T, any>
+  mutations: MutationTree<T>;
+  actions: ActionTree<T, any>;
+}
+
 export default function authPluginInit(
   feathersClient,
   globalOptions: FeathersVuexOptions
@@ -28,7 +40,7 @@ export default function authPluginInit(
     throw new Error('You must pass a Feathers Client instance to feathers-vuex')
   }
 
-  return function makeAuthPlugin(options) {
+  return function makeAuthPlugin(options: MakeAuthPluginOptions<any>) {
     options = Object.assign(
       {},
       defaults,
